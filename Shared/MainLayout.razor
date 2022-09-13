@@ -1,0 +1,58 @@
+﻿@inherits LayoutComponentBase
+@inject AuthenticationStateProvider _authenticationStateProvider;
+@inject NavigationManager _navigationManager;
+
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode"></MudThemeProvider>
+
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Typo="Typo.h5" Class="ml-3">Simple DnD Combat Tracker</MudText>
+        <MudSpacer />
+        <MudToggleIconButton @bind-Toggled="@_isDarkMode"
+                             Icon="@Icons.Filled.NightsStay" Size="Size.Large" Color="@Color.Inherit" Title="Off"
+                             ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Inherit" ToggledTitle="On" Edge="Edge.End"/>
+        <MudTooltip Text="@_loginText">
+            <MudIconButton Icon="@_loginIcon" Size="Size.Large" Color="Color.Inherit" Edge="Edge.End" OnClick="LoginIconOnClick"/>
+        </MudTooltip>
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        @*NavMenu*@
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private bool _drawerOpen;
+    private bool _isDarkMode = true;
+    private bool _loggedIn;
+    private string _loginIcon = Icons.Custom.Brands.Discord;
+    private string _loginText = "Login With Discord";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        if (authState.User.Identity == null)
+            return;
+
+        _loggedIn = authState.User.Identity.IsAuthenticated;
+
+        _loginText = _loggedIn ? "Logout" : "Login With Discord";
+        _loginIcon = _loggedIn ? Icons.Filled.Logout : Icons.Custom.Brands.Discord;
+    }
+
+    public void LoginIconOnClick()
+    {
+        if(_loggedIn)
+            _navigationManager.NavigateTo("Logout", true);
+        _navigationManager.NavigateTo("Login", true);
+    }
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
+
