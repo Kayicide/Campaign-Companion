@@ -349,3 +349,5 @@ healthchecksdb
 MigrationBackup/
 
 appsettings.json
+
+appsettings.Development.json

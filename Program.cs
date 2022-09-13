@@ -1,7 +1,6 @@
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
-using DnD_Combat_Turn_Tracker.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
@@ -12,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddHttpContextAccessor();
 
@@ -83,7 +81,7 @@ app.MapWhen(ctx => ctx.Request.Path.Equals("/Login"), applicationBuilder =>
     applicationBuilder.Run(async context =>
     {
         await context.ChallengeAsync("Discord",
-            properties: new AuthenticationProperties { RedirectUri = "https://localhost:7267/home" });
+            properties: new AuthenticationProperties { RedirectUri = "/" });
     });
 });
 
