@@ -19,7 +19,7 @@
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         @*NavMenu*@
     </MudDrawer>
-    <MudMainContent>
+    <MudMainContent Style="height: 100vh" Class="overflow-scroll">
         @Body
     </MudMainContent>
 </MudLayout>

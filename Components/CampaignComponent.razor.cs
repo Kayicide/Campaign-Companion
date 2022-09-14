@@ -1,0 +1,10 @@
+﻿using DnD_Combat_Turn_Tracker.Data.Entities;
+using Microsoft.AspNetCore.Components;
+
+namespace DnD_Combat_Turn_Tracker.Components
+{
+    public partial class CampaignComponent
+    {
+        [Parameter] public Campaign Campaign { get; set; }
+    }
+}

@@ -1,9 +1,11 @@
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
+using DnD_Combat_Turn_Tracker.Data.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.Extensions.Configuration;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,17 +18,26 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddMudServices();
 
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("CampaignService", c =>
+{
+
+    c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ConnectionStrings:CampaignAPI"));
+
+    c.DefaultRequestHeaders.Add("Accept", "application/json");
+
+    //c.DefaultRequestHeaders.Add("Authorization", "Bearer " + GenToken(Configuration.GetValue<string>("AuthServiceSecret")));
+
+});
+
+builder.Services.AddTransient<ICampaignService, CampaignService>();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultChallengeScheme = "Discord";
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 })
-    .AddCookie(options =>
-    {
-        var builder = new CookieBuilder();
-        builder.Name = "DCTT";
-        options.Cookie = builder;
-    })
+    .AddCookie()
     .AddOAuth("Discord",
     options =>
     {

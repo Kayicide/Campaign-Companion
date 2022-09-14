@@ -1,0 +1,54 @@
+﻿@page "/test"
+<MudDropContainer T="DropItem" Items="_items" Item ItemsSelector="@((item,dropzone) => item.Identifier == dropzone)" ItemDropped="ItemUpdated" Class="d-flex flex-column flex-grow-1">
+    <ChildContent>
+        <div class="d-flex flex-column flex-grow-1">
+            <MudListSubheader Class="mt-4 pb-2">Folders</MudListSubheader>
+            <MudDropZone T="DropItem" ItemDraggingClass="mud-info-text" Identifier="Folders" Class="d-flex flex-wrap flex-grow-1 pa-2 rounded" AllowReorder="true"/>
+        </div>
+    </ChildContent>
+    <ItemRenderer>
+        <MudCard Class="ma-3">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@context.Name</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText>This day everything happend.</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+            </MudCardActions>
+        </MudCard>
+        @*       <div Class="rounded mud-paper-outlined d-flex align-center pa-3 ma-2">
+            <MudIcon Icon="@(context.Identifier == "Folders" ? Icons.Custom.Uncategorized.Folder : Icons.Custom.FileFormats.FileDocument)" Color="Color.Inherit" Class="mr-2"/>
+            @context.Name
+        </div>*@
+    </ItemRenderer>
+</MudDropContainer>
+
+@code {
+    private void ItemUpdated(MudItemDropInfo<DropItem> dropItem)
+    {
+        dropItem.Item.Identifier = dropItem.DropzoneIdentifier;
+    }
+
+    private List<DropItem> _items = new()
+    {
+        new DropItem(){ Name = "Wallpapers", Identifier = "Folders" },
+        new DropItem(){ Name = "Propaganda", Identifier = "Folders" },
+        new DropItem(){ Name = "Funny, Dank, Meme", Identifier = "Folders" },
+        new DropItem(){ Name = "Work", Identifier = "Folders" },
+        new DropItem(){ Name = "Photos", Identifier = "Folders" },
+    };
+
+    public class DropItem
+    {
+        public string Name { get; init; }
+        public string Identifier { get; set; }
+    }
+}
