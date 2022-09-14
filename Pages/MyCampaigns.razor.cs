@@ -12,14 +12,22 @@ namespace DnD_Combat_Turn_Tracker.Pages
         [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
         public List<Campaign> CampaignList { get; set; } = new List<Campaign>();
+        private string _userId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var userId = authState.User.Claims.Single(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            _userId = authState.User.Claims.Single(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
 
-            CampaignList = await CampaignService.GetUserCampaigns(userId);
+            CampaignList = await CampaignService.GetUserCampaigns(_userId);
+        }
+
+        private async void CreateCampaign(string campaignName)
+        {
+            var createdCampaign = await CampaignService.CreateCampaign(campaignName, _userId);
+            CampaignList.Add(createdCampaign);
+            StateHasChanged();
         }
     }
 }
