@@ -1,11 +1,16 @@
 ﻿@page "/mycampaigns"
 @using DnD_Combat_Turn_Tracker.Components
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+<MudContainer Class="pt-6" MaxWidth="MaxWidth.False">
     <MudGrid>
         @foreach (var campaign in CampaignList)
         {
-            <CampaignComponent Campaign="campaign"></CampaignComponent>
+            <MudItem xs="12" sm="6" md="4">
+                <CampaignCard Campaign="campaign"></CampaignCard>
+            </MudItem>
         }
+        <MudItem xs="12" sm="6" md="4">
+            <NewCampaignCard></NewCampaignCard>
+        </MudItem>
     </MudGrid>
 </MudContainer>
