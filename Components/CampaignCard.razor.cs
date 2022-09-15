@@ -11,6 +11,6 @@ namespace DnD_Combat_Turn_Tracker.Components
         public int ElevationLevel { get; set; } = 1;
         private void OnMouseOver() => ElevationLevel = 4;
         private void OnMouseOut() => ElevationLevel = 1;
-        private void OnClickCampaign() => NavigationManager.NavigateTo("/");
+        private void OnClickCampaign() => NavigationManager.NavigateTo($"/Campaign/{Campaign.Id}");
     }
 }

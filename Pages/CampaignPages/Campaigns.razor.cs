@@ -2,7 +2,7 @@
 using DnD_Combat_Turn_Tracker.Data.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace DnD_Combat_Turn_Tracker.Pages
+namespace DnD_Combat_Turn_Tracker.Pages.CampaignPages
 {
     public partial class Campaigns
     {

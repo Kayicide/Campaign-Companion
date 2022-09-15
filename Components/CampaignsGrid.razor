@@ -1,0 +1,11 @@
+﻿<MudGrid>
+    @foreach (var campaign in CampaignList)
+    {
+        <MudItem xs="12" sm="6" md="4">
+            <CampaignCard Campaign="campaign"></CampaignCard>
+        </MudItem>
+    }
+    <MudItem xs="12" sm="6" md="4">
+        <NewCampaignCard OnClickCallback="CreateCampaign"></NewCampaignCard>
+    </MudItem>
+</MudGrid>
