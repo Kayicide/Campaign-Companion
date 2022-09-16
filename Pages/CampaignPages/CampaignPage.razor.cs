@@ -10,7 +10,6 @@ namespace DnD_Combat_Turn_Tracker.Pages.CampaignPages
         [Inject] public ICampaignService CampaignService { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
         private Campaign? campaign { get; set; }
-
         protected override async Task OnParametersSetAsync()
         {
             if(!Guid.TryParse(CampaignId, out var campaignIdGuid))

@@ -9,6 +9,7 @@ namespace DnD_Combat_Turn_Tracker.Data.Services
         public Task<List<Campaign>> GetUserCampaigns(string userId);
         public Task<Campaign> CreateCampaign(string name, string userId);
         public Task<Campaign?> GetCampaign(Guid id);
+        public Task<Campaign> UpdateCampaign(Campaign campaign);
     }
     public class CampaignService : ICampaignService
     {
@@ -47,6 +48,16 @@ namespace DnD_Combat_Turn_Tracker.Data.Services
         {
             var body = new CreateCampaignHttpRequest {Name = name, UserId = userId};
             var response = await _campaignHttpClient.PostAsJsonAsync("Campaign", body);
+            var result = await response.Content.ReadFromJsonAsync<Campaign>();
+            if (result == null)
+                return new Campaign();
+            return result;
+        }
+
+        public async Task<Campaign> UpdateCampaign(Campaign campaign)
+        {
+            var body = new UpdateCampaignHttpRequest {Name = campaign.Name, Description = campaign.Description};
+            var response = await _campaignHttpClient.PutAsJsonAsync($"Campaign/{campaign.Id}", body);
             var result = await response.Content.ReadFromJsonAsync<Campaign>();
             if (result == null)
                 return new Campaign();

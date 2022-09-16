@@ -1,0 +1,52 @@
+﻿<MudContainer Class="d-flex flex-column flex-grow-1 gap-4 pl-0" MaxWidth="MaxWidth.False">
+    <MudPaper Elevation="3" Class="pa-4 d-flex" Style="height: 200px">
+        <MudContainer Class="d-flex flex-column flex-grow-0 pr-0 pl-0" MaxWidth="MaxWidth.False">
+            <MudContainer Class="d-flex justify-space-between pr-0 mb-2" MaxWidth="MaxWidth.False">
+                <MudContainer Class="pl-0">
+                    @if (EditMode)
+                    {
+                        <MudTextField @bind-Value="@CampaignNameUpdate" Label="Name" Variant="Variant.Outlined"></MudTextField>
+                    }
+                    else
+                    {
+                        <h1>@Campaign.Name</h1>
+                    }
+                </MudContainer>
+                @if (!ReadOnly)
+                {
+                    <MudContainer Class="d-flex justify-end pr-0">
+                        @if (EditMode)
+                        {
+                            <MudTooltip Arrow="true" Placement="Placement.Bottom" Text="Cancel Edit">
+                                <MudIconButton Icon="@Icons.Filled.EditOff" @onclick="CancelEdit"></MudIconButton>
+                            </MudTooltip>
+                            <MudTooltip Arrow="true" Placement="Placement.Bottom" Text="Save Changes">
+                                <MudIconButton Icon="@Icons.Filled.Save" @onclick="SaveChanges"></MudIconButton>
+                            </MudTooltip>
+                        }
+                        else
+                        {
+                            <MudTooltip Arrow="true" Placement="Placement.Bottom" Text="Edit">
+                                <MudIconButton Icon="@Icons.Filled.Edit" @onclick="ToggleEditMode"></MudIconButton>
+                            </MudTooltip>
+                            <MudTooltip Arrow="true" Placement="Placement.Bottom" Text="Campaign Settings Coming Soon!">
+                                <MudIconButton Icon="@Icons.Filled.Settings" Disabled="true"></MudIconButton>
+                            </MudTooltip>
+                        }
+                    </MudContainer>
+                }
+            </MudContainer>
+            <MudContainer Class="flex-grow-0" Style="overflow: scroll;" MaxWidth="MaxWidth.False">
+                @if (EditMode)
+                {
+                    <MudTextField Label="Description" Variant="Variant.Outlined" @bind-Value="CampaignDescriptionUpdate" Lines="2"/>
+                }
+                else
+                {
+                    <p>@Campaign.Description</p>
+                }
+            </MudContainer>
+        </MudContainer>
+    </MudPaper>
+    <MudPaper Elevation="3" Class="pa-4 flex-grow-1" Style="min-height: 300px"></MudPaper>
+</MudContainer>
