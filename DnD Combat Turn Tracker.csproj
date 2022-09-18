@@ -7,6 +7,7 @@
     <RootNamespace>DnD_Combat_Turn_Tracker</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'DnD Combat Turn Tracker' " />
   <ItemGroup>
     <PackageReference Include="MudBlazor" Version="6.0.15" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
+using DnD_Combat_Turn_Tracker.Data.Entities;
 using DnD_Combat_Turn_Tracker.Data.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -31,6 +32,7 @@ builder.Services.AddHttpClient("CampaignService", c =>
 });
 
 builder.Services.AddTransient<ICampaignService, CampaignService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -69,6 +71,10 @@ builder.Services.AddAuthentication(options =>
                 response.EnsureSuccessStatusCode();
 
                 var user = JsonDocument.Parse(await response.Content.ReadAsStringAsync()).RootElement;
+                var userObject = await response.Content.ReadFromJsonAsync<DiscordUser>();
+
+                var userService = builder.Services.BuildServiceProvider().GetService<IUserService>();
+                var test = await userService.FindOrCreateUser(userObject.Id);
 
                 context.RunClaimActions(user);
             }
