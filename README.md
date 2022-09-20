@@ -1,1 +1,1 @@
-# Campaign Companion API
+# Campaign Companion
