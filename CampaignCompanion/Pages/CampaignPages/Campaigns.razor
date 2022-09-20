@@ -1,0 +1,13 @@
+﻿@page "/campaigns"
+@using CampaignCompanion.Components
+
+<MudContainer Class="pt-6" MaxWidth="MaxWidth.False">
+    <MudGrid>
+        @foreach (var campaign in CampaignList)
+        {
+            <MudItem xs="12" sm="6" md="4">
+                <CampaignCard Campaign="campaign"></CampaignCard>
+            </MudItem>
+        }
+    </MudGrid>
+</MudContainer>
